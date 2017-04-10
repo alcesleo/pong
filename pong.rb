@@ -9,15 +9,19 @@ require "./lib/scoreboard"
 class Pong < Gosu::Window
   BACKGROUND_COLOR = Gosu::Color::BLACK
   FOREGROUND_COLOR = Gosu::Color::WHITE
-  PADDLE_MARGIN    = 10
-  PADDLE_WIDTH     = 20
+
+  PADDLE_MARGIN         = 10
+  PADDLE_WIDTH          = 20
+  PADDLE_HEIGHT         = 100
+  PLAYER_PADDLE_SPEED   = 10
+  COMPUTER_PADDLE_SPEED = 5
 
   def initialize
     super(640, 480)
     self.caption = "Pong"
 
-    @left_paddle     = Paddle.new(side: :left, margin: PADDLE_MARGIN, window_height: height, window_width: width)
-    @right_paddle    = Paddle.new(side: :right, margin: PADDLE_MARGIN, window_height: height, window_width: width)
+    @left_paddle     = Paddle.new(position: left_paddle_starting_position, height: PADDLE_HEIGHT, width: PADDLE_WIDTH, window_height: height, movement_speed: PLAYER_PADDLE_SPEED)
+    @right_paddle    = Paddle.new(position: right_paddle_starting_position, height: PADDLE_HEIGHT, width: PADDLE_WIDTH, window_height: height, movement_speed: COMPUTER_PADDLE_SPEED)
     @ball            = Ball.new(size: 40, window_height: height, window_width: width)
     @collision       = Collision.new(left_paddle: left_paddle, right_paddle: right_paddle, ball: ball, height: height, width: width)
     @computer_player = ComputerPlayer.new(paddle: right_paddle, ball: ball)
@@ -104,6 +108,20 @@ class Pong < Gosu::Window
 
   def font
     @_font ||= Gosu::Font.new(self, "Arial", 70)
+  end
+
+  def left_paddle_starting_position
+    Point.new(
+      x: PADDLE_MARGIN,
+      y: (height / 2) - (PADDLE_HEIGHT / 2)
+    )
+  end
+
+  def right_paddle_starting_position
+    Point.new(
+      x: (width - PADDLE_MARGIN - PADDLE_WIDTH),
+      y: (height / 2) - (PADDLE_HEIGHT / 2)
+    )
   end
 end
 
