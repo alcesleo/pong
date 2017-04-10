@@ -1,6 +1,8 @@
 require "gosu"
+require "./lib/point"
 require "./lib/paddle"
 require "./lib/ball"
+# require "./lib/collision"
 
 class Pong < Gosu::Window
   BACKGROUND_COLOR = Gosu::Color::BLACK
@@ -12,14 +14,16 @@ class Pong < Gosu::Window
     super(640, 480)
     self.caption = "Pong"
 
-    @left_paddle  = Paddle.new(window_height: height)
-    @right_paddle = Paddle.new(window_height: height)
+    @left_paddle  = Paddle.new(side: :left, margin: PADDLE_MARGIN, window_height: height, window_width: width)
+    @right_paddle = Paddle.new(side: :right, margin: PADDLE_MARGIN, window_height: height, window_width: width)
     @ball         = Ball.new(size: 40, window_height: height, window_width: width)
+    # @collission   = Collision.new(left_paddle: left_paddle, right_paddle: right_paddle, ball: ball, height: height, width: width)
   end
 
   def update
     move_paddle
     move_ball
+    # detect_collisions
   end
 
   def draw
@@ -56,21 +60,17 @@ class Pong < Gosu::Window
     ball.move
   end
 
+  def detect_collisions
+    collission.call
+  end
+
   def draw_background
     Gosu.draw_rect(0, 0, width, height, BACKGROUND_COLOR)
   end
 
   def draw_paddles
-    draw_left_paddle
-    draw_right_paddle
-  end
-
-  def draw_left_paddle
-    Gosu.draw_rect(PADDLE_MARGIN, left_paddle.position, PADDLE_WIDTH, left_paddle.height, FOREGROUND_COLOR)
-  end
-
-  def draw_right_paddle
-    Gosu.draw_rect(width - PADDLE_WIDTH - PADDLE_MARGIN, right_paddle.position, PADDLE_WIDTH, right_paddle.height, FOREGROUND_COLOR)
+    Gosu.draw_rect(left_paddle.position.x, left_paddle.position.y, left_paddle.width, left_paddle.height, FOREGROUND_COLOR)
+    Gosu.draw_rect(right_paddle.position.x, right_paddle.position.y, right_paddle.width, right_paddle.height, FOREGROUND_COLOR)
   end
 
   def draw_ball

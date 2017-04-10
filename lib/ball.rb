@@ -1,29 +1,4 @@
-class Point
-  attr_reader :x, :y
-
-  def initialize(x:, y:)
-    @x = x
-    @y = y
-
-    freeze
-  end
-
-  def +(other)
-    Point.new(x: x + other.x, y: y + other.y)
-  end
-
-  def invert_y
-    Point.new(x: x, y: -y)
-  end
-
-  def invert_x
-    Point.new(x: -x, y: y)
-  end
-
-  def invert_values
-    Point.new(x: -x, y: -y)
-  end
-end
+require "./lib/point"
 
 class Ball
   attr_reader :velocity, :position, :size
