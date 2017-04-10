@@ -17,7 +17,7 @@ class Collision
   private
 
   def detect_walls
-    if ball.position.y <= 0 || ball.position.y >= height - ball.size
+    if ball.position.y <= 0 || ball.position.y + ball.size >= height
       ball.bounce_wall
     end
   end
@@ -38,8 +38,8 @@ class Collision
   end
 
   def detect_right_paddle
-    hit_paddle_x = ball.position.x.between?(right_paddle.position.x, right_paddle.position.x + right_paddle.width)
     hit_paddle_y = ball.position.y.between?(right_paddle.position.y - ball.size, right_paddle.position.y + right_paddle.height + ball.size)
+    hit_paddle_x = (ball.position.x + ball.size).between?(right_paddle.position.x, right_paddle.position.x + right_paddle.width)
     going_right  = ball.velocity.x > 0
 
     if going_right && hit_paddle_y && hit_paddle_x
