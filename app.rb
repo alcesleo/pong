@@ -36,8 +36,9 @@ class Pong < Gosu::Window
   end
 
   def button_down(key)
-    if key == Gosu::KbQ
-      close
+    case key
+    when Gosu::KbQ then close
+    when Gosu::KbR then initialize
     end
   end
 
