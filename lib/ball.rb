@@ -9,7 +9,7 @@ class Ball
     @velocity = velocity
   end
 
-  def move
+  def call
     self.position += velocity
   end
 

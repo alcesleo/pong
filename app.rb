@@ -65,7 +65,7 @@ class Pong < Gosu::Window
   end
 
   def move_ball
-    ball.move
+    ball.call
   end
 
   def detect_collisions
