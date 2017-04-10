@@ -17,8 +17,4 @@ class Point
   def invert_x
     Point.new(x: -x, y: y)
   end
-
-  def invert_values
-    Point.new(x: -x, y: -y)
-  end
 end
