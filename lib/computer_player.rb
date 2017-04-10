@@ -7,9 +7,9 @@ class ComputerPlayer
   end
 
   def call
-    if paddle_center > ball_center
+    if paddle.position.y > ball.position.y
       paddle.move_up
-    else
+    elsif paddle.position.y + paddle.height < ball.position.y + ball.size
       paddle.move_down
     end
   end
