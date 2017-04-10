@@ -4,6 +4,7 @@ require "./lib/paddle"
 require "./lib/ball"
 require "./lib/collision"
 require "./lib/computer_player"
+require "./lib/scoreboard"
 
 class Pong < Gosu::Window
   BACKGROUND_COLOR = Gosu::Color::BLACK
@@ -20,6 +21,7 @@ class Pong < Gosu::Window
     @ball            = Ball.new(size: 40, window_height: height, window_width: width)
     @collision       = Collision.new(left_paddle: left_paddle, right_paddle: right_paddle, ball: ball, height: height, width: width)
     @computer_player = ComputerPlayer.new(paddle: right_paddle, ball: ball)
+    @scoreboard      = Scoreboard.new(ball: ball, window_width: width, callback: method(:reset_ball))
   end
 
   def update
@@ -27,12 +29,14 @@ class Pong < Gosu::Window
     move_computer_paddle
     move_ball
     detect_collisions
+    keep_score
   end
 
   def draw
     draw_background
     draw_paddles
     draw_ball
+    draw_scoreboard
   end
 
   def button_down(key)
@@ -48,7 +52,11 @@ class Pong < Gosu::Window
 
   private
 
-  attr_reader :left_paddle, :right_paddle, :ball, :collision, :computer_player
+  attr_reader :left_paddle, :right_paddle, :ball, :collision, :computer_player, :scoreboard
+
+  def reset_ball
+    ball.reset
+  end
 
   def move_player_paddle
     if button_down?(Gosu::KbUp)
@@ -72,6 +80,10 @@ class Pong < Gosu::Window
     collision.call
   end
 
+  def keep_score
+    scoreboard.call
+  end
+
   def draw_background
     Gosu.draw_rect(0, 0, width, height, BACKGROUND_COLOR)
   end
@@ -83,6 +95,15 @@ class Pong < Gosu::Window
 
   def draw_ball
     Gosu.draw_rect(ball.position.x, ball.position.y, ball.size, ball.size, FOREGROUND_COLOR)
+  end
+
+  def draw_scoreboard
+    font.draw(scoreboard.left_score, (width / 3) - 20, 50, 0)
+    font.draw(scoreboard.right_score, ((width / 3) * 2) - 20, 50, 0)
+  end
+
+  def font
+    @_font ||= Gosu::Font.new(self, "Arial", 70)
   end
 end
 
