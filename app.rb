@@ -1,9 +1,10 @@
 require "gosu"
 require "./lib/paddle"
+require "./lib/ball"
 
 class Pong < Gosu::Window
   BACKGROUND_COLOR = Gosu::Color::BLACK
-  PADDLE_COLOR     = Gosu::Color::WHITE
+  FOREGROUND_COLOR = Gosu::Color::WHITE
   PADDLE_MARGIN    = 10
   PADDLE_WIDTH     = 20
 
@@ -13,15 +14,18 @@ class Pong < Gosu::Window
 
     @left_paddle  = Paddle.new(window_height: height)
     @right_paddle = Paddle.new(window_height: height)
+    @ball         = Ball.new(size: 40, window_height: height, window_width: width)
   end
 
   def update
     move_paddle
+    move_ball
   end
 
   def draw
     draw_background
     draw_paddles
+    draw_ball
   end
 
   def button_down(key)
@@ -36,7 +40,7 @@ class Pong < Gosu::Window
 
   private
 
-  attr_reader :left_paddle, :right_paddle
+  attr_reader :left_paddle, :right_paddle, :ball
 
   def move_paddle
     if button_down?(Gosu::KbUp)
@@ -46,6 +50,10 @@ class Pong < Gosu::Window
     if button_down?(Gosu::KbDown)
       left_paddle.move_down
     end
+  end
+
+  def move_ball
+    ball.move
   end
 
   def draw_background
@@ -58,11 +66,15 @@ class Pong < Gosu::Window
   end
 
   def draw_left_paddle
-    Gosu.draw_rect(PADDLE_MARGIN, left_paddle.position, PADDLE_WIDTH, left_paddle.height, PADDLE_COLOR)
+    Gosu.draw_rect(PADDLE_MARGIN, left_paddle.position, PADDLE_WIDTH, left_paddle.height, FOREGROUND_COLOR)
   end
 
   def draw_right_paddle
-    Gosu.draw_rect(width - PADDLE_WIDTH - PADDLE_MARGIN, right_paddle.position, PADDLE_WIDTH, right_paddle.height, PADDLE_COLOR)
+    Gosu.draw_rect(width - PADDLE_WIDTH - PADDLE_MARGIN, right_paddle.position, PADDLE_WIDTH, right_paddle.height, FOREGROUND_COLOR)
+  end
+
+  def draw_ball
+    Gosu.draw_rect(ball.position.x, ball.position.y, ball.size, ball.size, FOREGROUND_COLOR)
   end
 end
 
