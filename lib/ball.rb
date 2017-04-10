@@ -14,7 +14,7 @@ class Ball
   end
 
   def bounce_paddle
-    self.velocity = velocity.invert_values
+    self.velocity = velocity.invert_x
   end
 
   def bounce_wall
@@ -28,8 +28,8 @@ class Ball
 
   def random_velocity
     velocity = Point.new(
-      x: rand(10..20),
-      y: rand(10..20),
+      x: rand(5..10),
+      y: rand(5..10),
     )
     velocity = velocity.invert_y if rand > 0.5
     velocity = velocity.invert_x if rand > 0.5

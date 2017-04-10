@@ -2,7 +2,8 @@ require "gosu"
 require "./lib/point"
 require "./lib/paddle"
 require "./lib/ball"
-# require "./lib/collision"
+require "./lib/collision"
+require "./lib/computer_player"
 
 class Pong < Gosu::Window
   BACKGROUND_COLOR = Gosu::Color::BLACK
@@ -14,16 +15,18 @@ class Pong < Gosu::Window
     super(640, 480)
     self.caption = "Pong"
 
-    @left_paddle  = Paddle.new(side: :left, margin: PADDLE_MARGIN, window_height: height, window_width: width)
-    @right_paddle = Paddle.new(side: :right, margin: PADDLE_MARGIN, window_height: height, window_width: width)
-    @ball         = Ball.new(size: 40, window_height: height, window_width: width)
-    # @collission   = Collision.new(left_paddle: left_paddle, right_paddle: right_paddle, ball: ball, height: height, width: width)
+    @left_paddle     = Paddle.new(side: :left, margin: PADDLE_MARGIN, window_height: height, window_width: width)
+    @right_paddle    = Paddle.new(side: :right, margin: PADDLE_MARGIN, window_height: height, window_width: width)
+    @ball            = Ball.new(size: 40, window_height: height, window_width: width)
+    @collision       = Collision.new(left_paddle: left_paddle, right_paddle: right_paddle, ball: ball, height: height, width: width)
+    @computer_player = ComputerPlayer.new(paddle: right_paddle, ball: ball)
   end
 
   def update
     move_paddle
+    move_computer_paddle
     move_ball
-    # detect_collisions
+    detect_collisions
   end
 
   def draw
@@ -44,7 +47,7 @@ class Pong < Gosu::Window
 
   private
 
-  attr_reader :left_paddle, :right_paddle, :ball
+  attr_reader :left_paddle, :right_paddle, :ball, :collision, :computer_player
 
   def move_paddle
     if button_down?(Gosu::KbUp)
@@ -56,12 +59,16 @@ class Pong < Gosu::Window
     end
   end
 
+  def move_computer_paddle
+    computer_player.call
+  end
+
   def move_ball
     ball.move
   end
 
   def detect_collisions
-    collission.call
+    collision.call
   end
 
   def draw_background
