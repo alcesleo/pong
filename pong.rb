@@ -23,7 +23,7 @@ class Pong < Gosu::Window
   end
 
   def update
-    move_paddle
+    move_player_paddle
     move_computer_paddle
     move_ball
     detect_collisions
@@ -50,7 +50,7 @@ class Pong < Gosu::Window
 
   attr_reader :left_paddle, :right_paddle, :ball, :collision, :computer_player
 
-  def move_paddle
+  def move_player_paddle
     if button_down?(Gosu::KbUp)
       left_paddle.move_up
     end
