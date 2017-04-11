@@ -10,19 +10,20 @@ class Pong < Gosu::Window
   BACKGROUND_COLOR = Gosu::Color::BLACK
   FOREGROUND_COLOR = Gosu::Color::WHITE
 
-  PADDLE_MARGIN         = 10
-  PADDLE_WIDTH          = 20
+  BALL_SIZE             = 40
   PADDLE_HEIGHT         = 100
-  PLAYER_PADDLE_SPEED   = 10
-  COMPUTER_PADDLE_SPEED = 5
+  PADDLE_MARGIN         = 10
+  PADDLE_SPEED_COMPUTER = 5
+  PADDLE_SPEED_PLAYER   = 10
+  PADDLE_WIDTH          = 20
 
   def initialize
     super(640, 480)
     self.caption = "Pong"
 
-    @left_paddle     = Paddle.new(position: left_paddle_starting_position, height: PADDLE_HEIGHT, width: PADDLE_WIDTH, window_height: height, movement_speed: PLAYER_PADDLE_SPEED)
-    @right_paddle    = Paddle.new(position: right_paddle_starting_position, height: PADDLE_HEIGHT, width: PADDLE_WIDTH, window_height: height, movement_speed: COMPUTER_PADDLE_SPEED)
-    @ball            = Ball.new(size: 40, window_height: height, window_width: width)
+    @left_paddle     = Paddle.new(position: left_paddle_starting_position, height: PADDLE_HEIGHT, width: PADDLE_WIDTH, window_height: height, movement_speed: PADDLE_SPEED_PLAYER)
+    @right_paddle    = Paddle.new(position: right_paddle_starting_position, height: PADDLE_HEIGHT, width: PADDLE_WIDTH, window_height: height, movement_speed: PADDLE_SPEED_COMPUTER)
+    @ball            = Ball.new(size: BALL_SIZE, window_height: height, window_width: width)
     @collision       = Collision.new(left_paddle: left_paddle, right_paddle: right_paddle, ball: ball, height: height, width: width)
     @computer_player = ComputerPlayer.new(paddle: right_paddle, ball: ball)
     @scoreboard      = Scoreboard.new(ball: ball, window_width: width, callback: method(:reset_ball))
