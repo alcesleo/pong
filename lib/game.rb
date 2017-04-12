@@ -13,11 +13,11 @@ class Game
   PADDLE_WIDTH          = 20
   BALL_SIZE             = 40
 
-  attr_reader :window_width, :window_height
+  attr_reader :boundary_width, :boundary_height
 
-  def initialize(window_width, window_height)
-    @window_width = window_width
-    @window_height = window_height
+  def initialize(boundary_width, boundary_height)
+    @boundary_width = boundary_width
+    @boundary_height = boundary_height
   end
 
   def player_paddle
@@ -25,7 +25,7 @@ class Game
       height:         PADDLE_HEIGHT,
       width:          PADDLE_WIDTH,
       movement_speed: PADDLE_SPEED_PLAYER,
-      window_height:  window_height,
+      boundary_height:  boundary_height,
       position:       Point.new(x: paddle_left_position, y: paddle_vertical_center_position),
     )
   end
@@ -35,7 +35,7 @@ class Game
       height:         PADDLE_HEIGHT,
       width:          PADDLE_WIDTH,
       movement_speed: PADDLE_SPEED_COMPUTER,
-      window_height:  window_height,
+      boundary_height:  boundary_height,
       position:       Point.new(x: paddle_right_position, y: paddle_vertical_center_position),
     )
   end
@@ -49,8 +49,8 @@ class Game
       left_paddle:  player_paddle,
       right_paddle: computer_paddle,
       ball:         ball,
-      height:       window_height,
-      width:        window_width,
+      height:       boundary_height,
+      width:        boundary_width,
     )
   end
 
@@ -59,7 +59,7 @@ class Game
   end
 
   def score
-    @_score = Score.new(ball: ball, window_width: window_width, callback: method(:reset_ball))
+    @_score = Score.new(ball: ball, boundary_width: boundary_width, callback: method(:reset_ball))
   end
 
   def reset_ball
@@ -70,7 +70,7 @@ class Game
   private
 
   def paddle_vertical_center_position
-    (window_height / 2) - (PADDLE_HEIGHT / 2)
+    (boundary_height / 2) - (PADDLE_HEIGHT / 2)
   end
 
   def paddle_left_position
@@ -78,7 +78,7 @@ class Game
   end
 
   def paddle_right_position
-    (window_width - PADDLE_MARGIN - PADDLE_WIDTH)
+    (boundary_width - PADDLE_MARGIN - PADDLE_WIDTH)
   end
 
   def ball_random_velocity
@@ -90,8 +90,8 @@ class Game
 
   def ball_center_position
     Point.new(
-      x: (window_width / 2) - (BALL_SIZE / 2),
-      y: (window_height / 2) - (BALL_SIZE / 2),
+      x: (boundary_width / 2) - (BALL_SIZE / 2),
+      y: (boundary_height / 2) - (BALL_SIZE / 2),
     )
   end
 
