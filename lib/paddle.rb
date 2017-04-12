@@ -1,7 +1,7 @@
 class Paddle
   attr_reader :position, :height, :width, :boundary_height, :movement_speed
 
-  def initialize(position:, height: 100, width: 20, boundary_height:, movement_speed: 10)
+  def initialize(position:, height:, width:, boundary_height:, movement_speed:)
     @position        = position
     @height          = height
     @width           = width
@@ -16,8 +16,4 @@ class Paddle
   def move_down
     position.y += movement_speed unless position.y >= boundary_height - height
   end
-
-  private
-
-  attr_writer :position
 end
