@@ -1,4 +1,7 @@
 require "./lib/paddle"
+require "./lib/point"
+require "./lib/ball"
+require "./lib/collision"
 
 class Game
   PADDLE_HEIGHT         = 100
@@ -6,6 +9,7 @@ class Game
   PADDLE_SPEED_COMPUTER = 5
   PADDLE_SPEED_PLAYER   = 10
   PADDLE_WIDTH          = 20
+  BALL_SIZE             = 40
 
   attr_reader :window_width, :window_height
 
@@ -34,6 +38,27 @@ class Game
     )
   end
 
+  def ball
+    @_ball ||= Ball.new(size: BALL_SIZE, position: ball_center_position, velocity: ball_random_velocity)
+  end
+
+  def collision
+    @_collision ||= Collision.new(
+      left_paddle:  player_paddle,
+      right_paddle: computer_paddle,
+      ball:         ball,
+      height:       window_height,
+      width:        window_width,
+    )
+  end
+
+  def reset_ball
+    ball.position = ball_center_position
+    ball.velocity = ball_random_velocity
+  end
+
+  private
+
   def paddle_vertical_center_position
     (window_height / 2) - (PADDLE_HEIGHT / 2)
   end
@@ -44,5 +69,22 @@ class Game
 
   def paddle_right_position
     (window_width - PADDLE_MARGIN - PADDLE_WIDTH)
+  end
+
+  def ball_random_velocity
+    velocity = Point.new(
+      x: rand(5..10),
+      y: rand(5..10),
+    )
+    velocity = velocity.invert_y if rand > 0.5
+    velocity = velocity.invert_x if rand > 0.5
+    velocity
+  end
+
+  def ball_center_position
+    Point.new(
+      x: (window_width / 2) - (BALL_SIZE / 2),
+      y: (window_height / 2) - (BALL_SIZE / 2),
+    )
   end
 end

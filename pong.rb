@@ -1,8 +1,4 @@
 require "gosu"
-require "./lib/point"
-require "./lib/paddle"
-require "./lib/ball"
-require "./lib/collision"
 require "./lib/computer_player"
 require "./lib/scoreboard"
 require "./lib/game"
@@ -15,8 +11,6 @@ class Pong < Gosu::Window
   WINDOW_HEIGHT = 480
   WINDOW_TITLE  = "Pong"
 
-  BALL_SIZE             = 40
-
   def initialize
     super(WINDOW_WIDTH, WINDOW_HEIGHT)
     self.caption = WINDOW_TITLE
@@ -25,8 +19,8 @@ class Pong < Gosu::Window
 
     @left_paddle     = game.player_paddle
     @right_paddle    = game.computer_paddle
-    @ball            = Ball.new(size: BALL_SIZE, window_height: height, window_width: width)
-    @collision       = Collision.new(left_paddle: left_paddle, right_paddle: right_paddle, ball: ball, height: height, width: width)
+    @ball            = game.ball
+    @collision       = game.collision
     @computer_player = ComputerPlayer.new(paddle: right_paddle, ball: ball)
     @scoreboard      = Scoreboard.new(ball: ball, window_width: width, callback: method(:reset_ball))
   end
@@ -62,7 +56,7 @@ class Pong < Gosu::Window
   attr_reader :left_paddle, :right_paddle, :ball, :collision, :computer_player, :scoreboard, :game
 
   def reset_ball
-    ball.reset
+    game.reset_ball
   end
 
   def move_player_paddle
