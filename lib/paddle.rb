@@ -10,11 +10,11 @@ class Paddle
   end
 
   def move_up
-    self.position.y -= movement_speed unless position.y <= 0
+    position.y -= movement_speed unless position.y <= 0
   end
 
   def move_down
-    self.position.y += movement_speed unless position.y >= window_height - height
+    position.y += movement_speed unless position.y >= window_height - height
   end
 
   private

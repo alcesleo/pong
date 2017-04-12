@@ -10,6 +10,9 @@ class Ball
     @velocity        = velocity
   end
 
+  alias_method :width, :size
+  alias_method :height, :size
+
   def call
     self.position += velocity
   end
