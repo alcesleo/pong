@@ -27,11 +27,11 @@ class Game
     keep_score
   end
 
-  def move_paddle_up
+  def move_player_paddle_up
     player_paddle.move_up
   end
 
-  def move_paddle_down
+  def move_player_paddle_down
     player_paddle.move_down
   end
 

@@ -17,8 +17,8 @@ class Pong < Gosu::Window
   end
 
   def update
-    game.move_paddle_up if button_down?(Gosu::KbUp)
-    game.move_paddle_down if button_down?(Gosu::KbDown)
+    game.move_player_paddle_up if button_down?(Gosu::KbUp)
+    game.move_player_paddle_down if button_down?(Gosu::KbDown)
 
     game.tick
   end
