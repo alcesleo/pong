@@ -7,20 +7,20 @@ class ComputerPlayer
   end
 
   def call
-    if paddle.position.y > ball.position.y
+    if under_ball?
       paddle.move_up
-    elsif paddle.position.y + paddle.height < ball.position.y + ball.size
+    elsif over_ball?
       paddle.move_down
     end
   end
 
   private
 
-  def paddle_center
-    paddle.position.y + (paddle.height / 2)
+  def under_ball?
+    paddle.position.y > ball.position.y
   end
 
-  def ball_center
-    ball.position.y + (ball.size / 2)
+  def over_ball?
+    paddle.position.y + paddle.height < ball.position.y + ball.size
   end
 end

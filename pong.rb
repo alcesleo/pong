@@ -64,13 +64,8 @@ class Pong < Gosu::Window
   end
 
   def move_player_paddle
-    if button_down?(Gosu::KbUp)
-      left_paddle.move_up
-    end
-
-    if button_down?(Gosu::KbDown)
-      left_paddle.move_down
-    end
+    left_paddle.move_up if button_down?(Gosu::KbUp)
+    left_paddle.move_down if button_down?(Gosu::KbDown)
   end
 
   def move_computer_paddle
@@ -114,14 +109,14 @@ class Pong < Gosu::Window
   def left_paddle_starting_position
     Point.new(
       x: PADDLE_MARGIN,
-      y: (height / 2) - (PADDLE_HEIGHT / 2)
+      y: (height / 2) - (PADDLE_HEIGHT / 2),
     )
   end
 
   def right_paddle_starting_position
     Point.new(
       x: (width - PADDLE_MARGIN - PADDLE_WIDTH),
-      y: (height / 2) - (PADDLE_HEIGHT / 2)
+      y: (height / 2) - (PADDLE_HEIGHT / 2),
     )
   end
 end
