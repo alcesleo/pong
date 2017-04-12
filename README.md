@@ -4,7 +4,14 @@
 
 ## Installation
 
+You need [Homebrew](https://brew.sh/) installed.
+
 ```
+# If you don't already have Ruby and Bundler, run this first:
+brew install ruby
+gem install bundler
+
+# To install the dependencies of this game, run this:
 brew install sdl2 # I used sdl2-2.0.5
 bundle
 ```
