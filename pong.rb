@@ -5,24 +5,26 @@ require "./lib/ball"
 require "./lib/collision"
 require "./lib/computer_player"
 require "./lib/scoreboard"
+require "./lib/game"
 
 class Pong < Gosu::Window
   BACKGROUND_COLOR = Gosu::Color::BLACK
   FOREGROUND_COLOR = Gosu::Color::WHITE
 
+  WINDOW_WIDTH  = 640
+  WINDOW_HEIGHT = 480
+  WINDOW_TITLE  = "Pong"
+
   BALL_SIZE             = 40
-  PADDLE_HEIGHT         = 100
-  PADDLE_MARGIN         = 10
-  PADDLE_SPEED_COMPUTER = 5
-  PADDLE_SPEED_PLAYER   = 10
-  PADDLE_WIDTH          = 20
 
   def initialize
-    super(640, 480)
-    self.caption = "Pong"
+    super(WINDOW_WIDTH, WINDOW_HEIGHT)
+    self.caption = WINDOW_TITLE
 
-    @left_paddle     = Paddle.new(position: left_paddle_starting_position, height: PADDLE_HEIGHT, width: PADDLE_WIDTH, window_height: height, movement_speed: PADDLE_SPEED_PLAYER)
-    @right_paddle    = Paddle.new(position: right_paddle_starting_position, height: PADDLE_HEIGHT, width: PADDLE_WIDTH, window_height: height, movement_speed: PADDLE_SPEED_COMPUTER)
+    @game = Game.new(width, height)
+
+    @left_paddle     = game.player_paddle
+    @right_paddle    = game.computer_paddle
     @ball            = Ball.new(size: BALL_SIZE, window_height: height, window_width: width)
     @collision       = Collision.new(left_paddle: left_paddle, right_paddle: right_paddle, ball: ball, height: height, width: width)
     @computer_player = ComputerPlayer.new(paddle: right_paddle, ball: ball)
@@ -57,7 +59,7 @@ class Pong < Gosu::Window
 
   private
 
-  attr_reader :left_paddle, :right_paddle, :ball, :collision, :computer_player, :scoreboard
+  attr_reader :left_paddle, :right_paddle, :ball, :collision, :computer_player, :scoreboard, :game
 
   def reset_ball
     ball.reset
@@ -104,20 +106,6 @@ class Pong < Gosu::Window
 
   def font
     @_font ||= Gosu::Font.new(self, "Arial", 70)
-  end
-
-  def left_paddle_starting_position
-    Point.new(
-      x: PADDLE_MARGIN,
-      y: (height / 2) - (PADDLE_HEIGHT / 2),
-    )
-  end
-
-  def right_paddle_starting_position
-    Point.new(
-      x: (width - PADDLE_MARGIN - PADDLE_WIDTH),
-      y: (height / 2) - (PADDLE_HEIGHT / 2),
-    )
   end
 end
 
