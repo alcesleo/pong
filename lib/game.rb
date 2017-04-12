@@ -83,12 +83,9 @@ class Game
 
   def ball_random_velocity
     velocity = Point.new(
-      x: rand(5..10),
-      y: rand(5..10),
+      x: random_number(5, 10),
+      y: random_number(5, 10),
     )
-    velocity = velocity.invert_y if rand > 0.5
-    velocity = velocity.invert_x if rand > 0.5
-    velocity
   end
 
   def ball_center_position
@@ -96,5 +93,11 @@ class Game
       x: (window_width / 2) - (BALL_SIZE / 2),
       y: (window_height / 2) - (BALL_SIZE / 2),
     )
+  end
+
+  def random_number(low_abs, high_abs)
+    result = 0
+    result = rand(-high_abs..high_abs) until result.abs > low_abs
+    result
   end
 end
