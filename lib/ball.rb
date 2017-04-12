@@ -1,5 +1,5 @@
 class Ball
-  attr_accessor :velocity, :position, :size
+  attr_accessor :size, :position, :velocity
 
   def initialize(size:, position:, velocity:)
     @size     = size
@@ -7,18 +7,19 @@ class Ball
     @velocity = velocity
   end
 
-  alias width size
   alias height size
+  alias width size
 
   def call
-    self.position += velocity
+    self.position.x += velocity.x
+    self.position.y += velocity.y
   end
 
   def bounce_paddle
-    self.velocity = velocity.invert_x
+    self.velocity.x = -velocity.x
   end
 
   def bounce_wall
-    self.velocity = velocity.invert_y
+    self.velocity.y = -velocity.y
   end
 end
