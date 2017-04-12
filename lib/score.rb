@@ -2,11 +2,11 @@ class Score
   attr_reader :left_score, :right_score
 
   def initialize(ball:, boundary_width:, callback: Proc.new)
-    @ball         = ball
+    @ball           = ball
     @boundary_width = boundary_width
-    @callback     = callback
-    @left_score   = 0
-    @right_score  = 0
+    @callback       = callback
+    @left_score     = 0
+    @right_score    = 0
   end
 
   def call

@@ -16,27 +16,58 @@ class Game
   attr_reader :boundary_width, :boundary_height
 
   def initialize(boundary_width, boundary_height)
-    @boundary_width = boundary_width
+    @boundary_width  = boundary_width
     @boundary_height = boundary_height
+  end
+
+  def tick
+    move_ball
+    move_computer_paddle
+    detect_collisions
+    keep_score
+  end
+
+  def move_paddle_up
+    player_paddle.move_up
+  end
+
+  def move_paddle_down
+    player_paddle.move_down
+  end
+
+  def move_computer_paddle
+    computer_player.call
+  end
+
+  def move_ball
+    ball.call
+  end
+
+  def detect_collisions
+    collision.call
+  end
+
+  def keep_score
+    score.call
   end
 
   def player_paddle
     @_player_paddle ||= Paddle.new(
-      height:         PADDLE_HEIGHT,
-      width:          PADDLE_WIDTH,
-      movement_speed: PADDLE_SPEED_PLAYER,
-      boundary_height:  boundary_height,
-      position:       Point.new(x: paddle_left_position, y: paddle_vertical_center_position),
+      height:          PADDLE_HEIGHT,
+      width:           PADDLE_WIDTH,
+      movement_speed:  PADDLE_SPEED_PLAYER,
+      boundary_height: boundary_height,
+      position:        Point.new(x: paddle_left_position, y: paddle_vertical_center_position),
     )
   end
 
   def computer_paddle
     @_computer_paddle ||= Paddle.new(
-      height:         PADDLE_HEIGHT,
-      width:          PADDLE_WIDTH,
-      movement_speed: PADDLE_SPEED_COMPUTER,
-      boundary_height:  boundary_height,
-      position:       Point.new(x: paddle_right_position, y: paddle_vertical_center_position),
+      height:          PADDLE_HEIGHT,
+      width:           PADDLE_WIDTH,
+      movement_speed:  PADDLE_SPEED_COMPUTER,
+      boundary_height: boundary_height,
+      position:        Point.new(x: paddle_right_position, y: paddle_vertical_center_position),
     )
   end
 
@@ -59,15 +90,15 @@ class Game
   end
 
   def score
-    @_score = Score.new(ball: ball, boundary_width: boundary_width, callback: method(:reset_ball))
+    @_score ||= Score.new(ball: ball, boundary_width: boundary_width, callback: method(:reset_ball))
   end
+
+  private
 
   def reset_ball
     ball.position = ball_center_position
     ball.velocity = ball_random_velocity
   end
-
-  private
 
   def paddle_vertical_center_position
     (boundary_height / 2) - (PADDLE_HEIGHT / 2)
@@ -82,7 +113,7 @@ class Game
   end
 
   def ball_random_velocity
-    velocity = Point.new(
+    Point.new(
       x: random_number(5, 10),
       y: random_number(5, 10),
     )
