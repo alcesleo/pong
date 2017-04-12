@@ -3,10 +3,6 @@ GEM
   specs:
     ast (2.3.0)
     gosu (0.11.3.1)
-    metaclass (0.0.4)
-    minitest (5.10.1)
-    mocha (1.2.1)
-      metaclass (~> 0.0.1)
     parser (2.4.0.0)
       ast (~> 2.2)
     powerpack (0.1.1)
@@ -26,8 +22,6 @@ PLATFORMS
 
 DEPENDENCIES
   gosu (~> 0.11)
-  minitest (~> 5.10)
-  mocha (~> 1.2)
   rake
   rubocop
 
