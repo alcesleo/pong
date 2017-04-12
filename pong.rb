@@ -1,6 +1,4 @@
 require "gosu"
-require "./lib/computer_player"
-require "./lib/score"
 require "./lib/game"
 
 class Pong < Gosu::Window
@@ -21,8 +19,8 @@ class Pong < Gosu::Window
     @right_paddle    = game.computer_paddle
     @ball            = game.ball
     @collision       = game.collision
-    @computer_player = ComputerPlayer.new(paddle: right_paddle, ball: ball)
-    @score           = Score.new(ball: ball, window_width: width, callback: method(:reset_ball))
+    @computer_player = game.computer_player
+    @score           = game.score
   end
 
   def update

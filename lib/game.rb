@@ -1,7 +1,9 @@
-require "./lib/paddle"
-require "./lib/point"
 require "./lib/ball"
 require "./lib/collision"
+require "./lib/computer_player"
+require "./lib/paddle"
+require "./lib/point"
+require "./lib/score"
 
 class Game
   PADDLE_HEIGHT         = 100
@@ -50,6 +52,14 @@ class Game
       height:       window_height,
       width:        window_width,
     )
+  end
+
+  def computer_player
+    @_computer_player = ComputerPlayer.new(paddle: computer_paddle, ball: ball)
+  end
+
+  def score
+    @_score = Score.new(ball: ball, window_width: window_width, callback: method(:reset_ball))
   end
 
   def reset_ball
