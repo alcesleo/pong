@@ -1,4 +1,4 @@
-class Scoreboard
+class Score
   attr_reader :left_score, :right_score
 
   def initialize(ball:, window_width:, callback: Proc.new)
