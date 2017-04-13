@@ -13,7 +13,7 @@ class Pong < Gosu::Window
     super(WINDOW_WIDTH, WINDOW_HEIGHT)
     self.caption = WINDOW_TITLE
 
-    @game = Game.new(width, height)
+    @game = Game.new(boundary_width: width, boundary_height: height)
   end
 
   def update

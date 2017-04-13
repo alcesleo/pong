@@ -15,7 +15,7 @@ class Game
 
   attr_reader :boundary_width, :boundary_height
 
-  def initialize(boundary_width, boundary_height)
+  def initialize(boundary_width:, boundary_height:)
     @boundary_width  = boundary_width
     @boundary_height = boundary_height
   end

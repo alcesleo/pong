@@ -11,15 +11,15 @@ class Ball
   alias width size
 
   def call
-    self.position.x += velocity.x
-    self.position.y += velocity.y
+    position.x += velocity.x
+    position.y += velocity.y
   end
 
   def bounce_paddle
-    self.velocity.x = -velocity.x
+    velocity.x = -velocity.x
   end
 
   def bounce_wall
-    self.velocity.y = -velocity.y
+    velocity.y = -velocity.y
   end
 end

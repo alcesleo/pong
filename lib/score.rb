@@ -10,10 +10,10 @@ class Score
   end
 
   def call
-    if ball.position.x <= 0
+    if in_left_goal?
       self.right_score += 1
       callback.call
-    elsif ball.position.x + ball.size >= boundary_width
+    elsif in_right_goal?
       self.left_score += 1
       callback.call
     end
@@ -23,4 +23,12 @@ class Score
 
   attr_reader :ball, :boundary_width, :callback
   attr_writer :left_score, :right_score
+
+  def in_left_goal?
+    ball.position.x <= 0
+  end
+
+  def in_right_goal?
+    ball.position.x + ball.size >= boundary_width
+  end
 end
