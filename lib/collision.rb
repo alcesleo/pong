@@ -24,18 +24,22 @@ class Collision
   end
 
   def detect_walls
-    ball.bounce_wall if ball.position.y <= 0 || ball.position.y + ball.size >= height
+    ball.bounce_wall if hit_wall?
   end
 
   def detect_paddles
-    ball.bounce_paddle if hit_left_paddle || hit_right_paddle
+    ball.bounce_paddle if hit_left_paddle? || hit_right_paddle?
   end
 
-  def hit_left_paddle
+  def hit_wall?
+    ball.position.y <= 0 || ball.position.y + ball.size >= height
+  end
+
+  def hit_left_paddle?
     intersects?(left_paddle, ball) && ball.velocity.x < 0
   end
 
-  def hit_right_paddle
+  def hit_right_paddle?
     intersects?(right_paddle, ball) && ball.velocity.x > 0
   end
 end
