@@ -127,8 +127,6 @@ class Game
   end
 
   def random_number(low_abs, high_abs)
-    result = 0
-    result = rand(-high_abs..high_abs) until result.abs > low_abs
-    result
+    ((-high_abs..-low_abs).to_a + (low_abs..high_abs).to_a).sample
   end
 end
