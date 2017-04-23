@@ -6,12 +6,14 @@ require "./lib/point"
 require "./lib/score"
 
 class Game
+  BALL_SIZE             = 40
+  BALL_VELOCITY_MAX     = 10
+  BALL_VELOCITY_MIN     = 5
   PADDLE_HEIGHT         = 100
   PADDLE_MARGIN         = 10
   PADDLE_SPEED_COMPUTER = 5
   PADDLE_SPEED_PLAYER   = 10
   PADDLE_WIDTH          = 20
-  BALL_SIZE             = 40
 
   attr_reader :boundary_width, :boundary_height
 
@@ -114,8 +116,8 @@ class Game
 
   def ball_random_velocity
     Point.new(
-      x: random_number(5, 10),
-      y: random_number(5, 10),
+      x: random_number(BALL_VELOCITY_MIN, BALL_VELOCITY_MAX),
+      y: random_number(BALL_VELOCITY_MIN, BALL_VELOCITY_MAX),
     )
   end
 
