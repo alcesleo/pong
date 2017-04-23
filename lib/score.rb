@@ -10,13 +10,8 @@ class Score
   end
 
   def call
-    if in_left_goal?
-      self.right_score += 1
-      callback.call
-    elsif in_right_goal?
-      self.left_score += 1
-      callback.call
-    end
+    self.right_score += 1 and callback.call if in_left_goal?
+    self.left_score += 1 and callback.call if in_right_goal?
   end
 
   private
