@@ -16,10 +16,10 @@ class Ball
   end
 
   def bounce_paddle
-    velocity.x = -velocity.x
+    velocity.x *= -1
   end
 
   def bounce_wall
-    velocity.y = -velocity.y
+    velocity.y *= -1
   end
 end
