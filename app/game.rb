@@ -1,9 +1,9 @@
-require "./lib/ball"
-require "./lib/collision"
-require "./lib/computer_player"
-require "./lib/paddle"
-require "./lib/point"
-require "./lib/score"
+require "./app/ball"
+require "./app/collision"
+require "./app/computer_player"
+require "./app/paddle"
+require "./app/point"
+require "./app/score"
 
 class Game
   BALL_SIZE             = 40

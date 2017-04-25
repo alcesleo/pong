@@ -1,5 +1,5 @@
 require "gosu"
-require "./lib/game"
+require "./app/game"
 
 class Pong < Gosu::Window
   BACKGROUND_COLOR = Gosu::Color::BLACK
