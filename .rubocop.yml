@@ -1,5 +1,9 @@
 inherit_from:
   - https://raw.githubusercontent.com/alcesleo/rubocop-config/master/.rubocop.yml
 
+AllCops:
+  Exclude:
+    - "pkg/**/*"
+
 Style/AndOr:
   EnforcedStyle: conditionals
