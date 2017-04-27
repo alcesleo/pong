@@ -10,6 +10,6 @@ task :release do
   rm File.join(destination, "main.rb")
   rm_r File.join(destination, "app")
 
-  cp("pong.rb", File.join(destination, "main.rb"))
+  cp("main.rb", destination)
   cp_r("app", destination)
 end

@@ -1,5 +1,5 @@
 require "gosu"
-require "./app/game"
+require "game"
 
 class Pong < Gosu::Window
   BACKGROUND_COLOR = Gosu::Color::BLACK
@@ -71,5 +71,3 @@ class Pong < Gosu::Window
     @_font ||= Gosu::Font.new(self, "Arial", 70)
   end
 end
-
-Pong.new.show
